@@ -6,12 +6,43 @@ module.exports = {
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
+    
     extend: {
-      backgroundImage: {
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'gradient-conic':
-          'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+      screens: {
+        '3xl': '1660px'
       },
+
+      colors: {
+        redbg: '#E30A17'
+      },
+      
+      animation: {
+        fade: 'fadeOut 1s ease-in',
+        scale: 'scale .1s ease-in',
+        translateIn: 'translateIn .5s ease-in',
+      },
+
+      fontFamily: {
+        poppins: ['Poppins', 'sans-serif'],
+        rubik: ['Rubik', 'sans-serif'],
+      },
+
+      keyframes: theme => ({
+        fadeOut: {
+          '0%': {opacity: .0},
+          '100%': {opacity: 1},
+        },
+
+        scale: {
+          '0%': { width: '0%'},
+          '100%' : { width: 'fit'},
+        },
+
+        translateIn: {
+          '0%': { width : 'fit', transform: 'translateY(-100%)'},
+          '100%': { width : 'fit', transform: 'translateY(0%)'},
+        }
+      })
     },
   },
   plugins: [],
