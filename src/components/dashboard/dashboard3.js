@@ -63,7 +63,7 @@ export default function Dashboard3() {
                         </Link>
                     </div>}
             </section>
-            <div className="w-[100%] pl-10 md:ml-24 font-bold text-white text-2xl md:text-5xl mt-24 mb-5">Apa yang anda butuhkan?</div>
+            <div className="w-[100%] pl-6 md:ml-24 font-bold text-white text-2xl md:text-5xl md:mt-24 mt-10 mb-5">Apa yang anda butuhkan?</div>
             {
                 resize == true ? 
                 <div className="w-full grid grid-cols-2 pl-5 gap-2">
@@ -84,14 +84,22 @@ export default function Dashboard3() {
                             <p className="drop-shadow-[0_4px_4px_rgba(0,0,0,0.4)] text-right"><span className="font-normal">Hot</span> <br/> Deals</p>
                     </div>
                 </div> : 
-                <div className="w-full grid grid-cols-2 px-3">
+                <div className="grid grid-cols-2 gap-3 md:px-3">
                     <Link href={'/product'} className="h-full grid place-items-end">
-                            <p className="absolute text-white outline-white z-10">Best Seller</p>
+                            <p className="absolute text-white outline-white z-10 pb-2 pr-2 font-bold text-right"><span className="font-normal">Best</span><br/> Seller</p>
                             <Image src={'/need1.png'} height={0} width={0} sizes="160px" alt="" className="object-cover w-auto brightness-[.75] z-0"/>
                     </Link>
+                    <Link href={'/product'} className="h-full grid place-items-start">
+                            <p className="absolute text-white outline-white z-10 font-bold"><span className="font-normal">Most</span><br/>Searched</p>
+                            <Image src={'/need2.png'} height={0} width={0} sizes="160px" alt="" className="object-cover w-auto brightness-[.75] z-0"/>
+                    </Link>
+                    <Link href={'/product'} className="h-full w-full flex flex-col place-items-end">
+                            <p className="absolute text-white outline-white z-10 text-right font-bold pr-2 pt-2"><span className="font-normal">New</span> <br/>Collection</p>
+                            <Image src={'/need3.png'} height={0} width={0} sizes="160px" alt="" className="object-cover w-auto brightness-[.75] z-0"/>
+                    </Link>
                     <Link href={'/product'} className="h-full grid place-items-end">
-                            <p className="absolute text-white outline-white z-10">Best Seller</p>
-                            <Image src={'/need1.png'} height={0} width={0} sizes="160px" alt="" className="object-cover w-auto brightness-[.75] z-0"/>
+                            <p className="absolute text-white outline-white z-10 text-right font-bold"><span className="font-normal">Hot</span><br/>Deals</p>
+                            <Image src={'/need4.png'} height={0} width={0} sizes="160px" alt="" className="object-cover w-auto brightness-[.75] z-0"/>
                     </Link>
 
                 </div>
