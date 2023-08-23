@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-export default function ContactPerson() {
+export default function CustomFooter() {
     return(
         <main className="grid grid-cols-3 ">
             <div className="w-full grid grid-cols-2  place-items-center p-4">
