@@ -71,8 +71,8 @@ export default function Home() {
             <p style={poppins.style} className='text-[65px] md:text-8xl  font-bold text-transparent bg-clip-text bg-gradient-to-b from-redbg/[.61] md:from-[30%] from-[30%] to-white md:to-[45%] to-[48%]'>Categories</p>
          </span>
          <section className='page-3 flex  flex-col bg-gradient-to-b bg-opacity-100 from-redbg/[.61] from-60% to-redbg/[.3]'>
-            <div id='categories' style={poppins.style} className='min-h-[200vh]'><Dashboard3/></div>
-            {/* <div id='profil-suhuf' style={poppins.style} className='min-h-[50vh] p-32'><ProfilSuhuf/></div> */}
+            <div id='categories' style={poppins.style} className='min-h-fit'><Dashboard3/></div>
+            <div id='profil-suhuf' style={poppins.style} className='min-h-fit md:p-32 p-6'><ProfilSuhuf/></div>
          </section>
          <section id="contact-person" className='page-3 h-fit bg-white'>
             <CustomFooter/>
