@@ -5,17 +5,24 @@ import CustomNavigationBar from "@/components/navbar";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { useRouter } from 'next/navigation'
 
-export default function ProductPage() {
+export default function ProductPage({ query }) {
     const [count, setCount] = useState(0)
     const [products, setProducts] = useState()
     const [cardHover, setCardHover] = useState(false)
     const [shortByOpen, setShortByOpen] = useState(false)
+    const [category, setCategory] = useState()
+    const router = useRouter()
 
 
 
     const handleShortByOpen = () => {
         setShortByOpen(!shortByOpen)
+    }
+
+    const onCategoryChange = e => {
+        setCategory(e.target.value)
     }
 
     async function getData() {
@@ -30,6 +37,7 @@ export default function ProductPage() {
 
     useEffect(() => {
         getData()
+        console.log(query);
     }, [])
 
 
@@ -94,34 +102,42 @@ export default function ProductPage() {
                     <div>
                         <h1 className='font-bold text-left'>CATEGORIES</h1>
                         <div className='mt-5 grid grid-cols-2 lg:grid-cols-1 gap-5'>
+                            <div className="flex items-center">
+                                <input id="default-radio" name="category" type="radio" value="All" checked={"Alat%Make%Up" == category} onChange={onCategoryChange} className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                                <label for="default-radio" className="ml-2 text-sm font-medium text-gray-600 ">All</label>
+                            </div>
 
                             <div className="flex items-center">
-                                <input id="default-checkbox" type="checkbox" value="" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-                                <label for="default-checkbox" className="ml-2 text-sm font-medium text-gray-600 ">Alat Make Up</label>
+                                <input id="default-radio" name="category" type="radio" value="Alat Make Up" checked={"Alat Make Up" == category} onChange={onCategoryChange} className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                                <label for="default-radio" className="ml-2 text-sm font-medium text-gray-600 ">Alat Make Up</label>
                             </div>
                             <div className="flex items-center">
-                                <input id="default-checkbox" type="checkbox" value="" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-                                <label for="default-checkbox" className="ml-2 text-sm font-medium text-gray-600 ">Figura</label>
+                                <input id="default-radio" name="category" type="radio" value="Figura" checked={"Figura" == category} onChange={onCategoryChange} className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                                <label for="default-radio" className="ml-2 text-sm font-medium text-gray-600 ">Figura</label>
                             </div>
                             <div className="flex items-center">
-                                <input id="default-checkbox" type="checkbox" value="" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-                                <label for="default-checkbox" className="ml-2 text-sm font-medium text-gray-600 ">Box Kado</label>
+                                <input id="default-radio" name="category" type="radio" value="Box%Kado" checked={"Box%Kado" == category} onChange={onCategoryChange} className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                                <label for="default-radio" className="ml-2 text-sm font-medium text-gray-600 ">Box Kado</label>
                             </div>
                             <div className="flex items-center">
-                                <input id="default-checkbox" type="checkbox" value="" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-                                <label for="default-checkbox" className="ml-2 text-sm font-medium text-gray-600 ">Alat Tulis</label>
+                                <input id="default-radio" name="category" type="radio" value="Alat%Tulis" checked={"Alat%Tulis" == category} onChange={onCategoryChange} className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                                <label for="default-radio" className="ml-2 text-sm font-medium text-gray-600 ">Alat Tulis</label>
                             </div>
                             <div className="flex items-center">
-                                <input id="default-checkbox" type="checkbox" value="" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-                                <label for="default-checkbox" className="ml-2 text-sm font-medium text-gray-600 ">Pernak-pernik</label>
+                                <input id="default-radio" name="category" type="radio" value="pernak-pernik" checked={"pernak-pernik" == category} onChange={onCategoryChange} className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                                <label for="default-radio" className="ml-2 text-sm font-medium text-gray-600 ">Pernak-pernik</label>
+                            </div>
+                            <div className="flex items-center">
+                                <input id="default-radio" name="category" type="radio" value="Kertas%Daur%Ulang" checked={"Kertas%Daur%Ulang" == category} onChange={onCategoryChange} className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                                <label for="default-radio" className="ml-2 text-sm font-medium text-gray-600 ">Kertas Daur Ulang</label>
                             </div>
                         </div>
                     </div>
 
 
-                    <button className=" border-yellow-600 border-2 rounded-full col-span-2 p-3 text-neutral-900  transition-colors">
+                    <Link href={`http://localhost:5000/product$category=${category}`} className=" border-yellow-600 border-2 text-center rounded-full col-span-2 p-3 text-neutral-900  transition-colors">
                         FILTER
-                    </button>
+                    </Link>
                 </div>
 
                 {products && <div className='w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5'>
@@ -138,9 +154,6 @@ export default function ProductPage() {
                             </div>
                         </Link>
                     ))}
-
-
-
                 </div>}
             </div>
             <section id="contact-person" className='page-3 min-h-fit bg-white mt-32'>
