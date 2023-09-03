@@ -39,37 +39,41 @@ export default function ProductPage({ query }) {
         
     }
 
-    
 
 
-    async function getData() {
+    const getData = async () => {
         try {
-            const apiUrl = category === "All" ? 'http://localhost:5000/product' : `http://localhost:5000/product?category=${category}`;
-            const res = await fetch(apiUrl);
-
-            if (!res.ok) {
-                throw new Error('Failed to fetch data');
-            }
-
+            const res = await fetch('http://localhost:5000/product');
             const data = await res.json();
-
-            // Filter by price and category
+    
+            // Filter the data based on the selected category and price range
             const filteredData = data.filter((product) => {
                 const productPrice = parseFloat(product.price);
-
-                return (
-                    (minPrice <= productPrice || minPrice === 0) &&
-                    (maxPrice >= productPrice || maxPrice === 0)
-                );
+    
+                // Check if the product is within the selected category
+                if (category !== 'All' && category !== product.category) {
+                    return false;
+                }
+    
+                // Check if the product price is within the selected range
+                if (minPrice > 0 && productPrice < minPrice) {
+                    return false;
+                }
+    
+                if (maxPrice > 0 && productPrice > maxPrice) {
+                    return false;
+                }
+    
+                return true;
             });
-
+    
             setProducts(filteredData);
-
         } catch (error) {
-            // Handle error, e.g., display an error message
-            console.error('Error fetching data:', error);
+            console.log('Error fetching data:', error);
         }
-    }
+    };
+    
+
 
     useEffect(() => {
         getData();
