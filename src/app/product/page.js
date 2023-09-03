@@ -108,7 +108,7 @@ export default function ProductPage({ query }) {
                             </div>
 
                             <div className="flex items-center">
-                                <input id="default-radio" name="category" type="radio" value="Alat Make Up" checked={"Alat Make Up" == category} onChange={onCategoryChange} className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                                <input id="default-radio" name="category" type="radio" value="Alat-Make-Up" checked={"Alat-Make-Up" == category} onChange={onCategoryChange} className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
                                 <label for="default-radio" className="ml-2 text-sm font-medium text-gray-600 ">Alat Make Up</label>
                             </div>
                             <div className="flex items-center">
@@ -135,7 +135,7 @@ export default function ProductPage({ query }) {
                     </div>
 
 
-                    <Link href={`http://localhost:5000/product$category=${category}`} className=" border-yellow-600 border-2 text-center rounded-full col-span-2 p-3 text-neutral-900  transition-colors">
+                    <Link href={`http://localhost:5000/product&category=${category}`} className=" border-yellow-600 border-2 text-center rounded-full col-span-2 p-3 text-neutral-900  transition-colors">
                         FILTER
                     </Link>
                 </div>
