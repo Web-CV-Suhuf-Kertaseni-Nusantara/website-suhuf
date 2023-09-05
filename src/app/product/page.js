@@ -12,8 +12,12 @@ export default function ProductPage({ query }) {
     const [products, setProducts] = useState()
     const [cardHover, setCardHover] = useState(false)
     const [shortByOpen, setShortByOpen] = useState(false)
-    const [category, setCategory] = useState()
+    const [category, setCategory] = useState('All');
     const router = useRouter()
+    const [minPrice,setMinPrice] = useState(0);
+    const [maxPrice,setMaxPrice] = useState(0)
+
+
 
 
 
@@ -25,20 +29,55 @@ export default function ProductPage({ query }) {
         setCategory(e.target.value)
     }
 
-    async function getData() {
-        const res = await fetch('http://localhost:5000/product')
-        const data = await res.json();
-        setProducts(data)
-
-        if (!res.ok) {
-            throw new Error('Failed to fetch data')
-        }
+    const onMinPriceChange = e => {
+        setMinPrice(e.target.value)
+        
     }
 
+    const onMaxPriceChange = e => {
+        setMaxPrice(e.target.value)
+        
+    }
+
+
+
+    const getData = async () => {
+        try {
+            const res = await fetch('http://localhost:5000/product');
+            const data = await res.json();
+    
+            // Filter the data based on the selected category and price range
+            const filteredData = data.filter((product) => {
+                const productPrice = parseFloat(product.price);
+    
+                // Check if the product is within the selected category
+                if (category !== 'All' && category !== product.category) {
+                    return false;
+                }
+    
+                // Check if the product price is within the selected range
+                if (minPrice > 0 && productPrice < minPrice) {
+                    return false;
+                }
+    
+                if (maxPrice > 0 && productPrice > maxPrice) {
+                    return false;
+                }
+    
+                return true;
+            });
+    
+            setProducts(filteredData);
+        } catch (error) {
+            console.log('Error fetching data:', error);
+        }
+    };
+    
+
+
     useEffect(() => {
-        getData()
-        console.log(query);
-    }, [])
+        getData();
+    }, []); 
 
 
     return (
@@ -92,9 +131,9 @@ export default function ProductPage({ query }) {
                         <h1 className='font-bold text-left '>PRICE</h1>
                         <h1 className='text-gray-600 text-left text-sm mt-5'>Range</h1>
                         <div className='flex justify-between space-x-3 mt-3 items-center'>
-                            <input type="number" id="default-number" className="block w-full py-4 px-5 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 " required />
+                            <input onChange={onMinPriceChange} type="number" id="minPrice" min={0} placeholder="Min Price" className="block w-full py-4 px-5 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500" required />
                             <h1 className='text-xl font-bold'>-</h1>
-                            <input type="number" id="default-number" className="block w-full py-4 px-5 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 " required />
+                            <input onChange={onMaxPriceChange} type="number" id="maxPrice" min={0}  placeholder="Max Price" className="block w-full py-4 px-5 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 " required />
 
                         </div>
                     </div>
@@ -103,41 +142,42 @@ export default function ProductPage({ query }) {
                         <h1 className='font-bold text-left'>CATEGORIES</h1>
                         <div className='mt-5 grid grid-cols-2 lg:grid-cols-1 gap-5'>
                             <div className="flex items-center">
-                                <input id="default-radio" name="category" type="radio" value="All" checked={"Alat%Make%Up" == category} onChange={onCategoryChange} className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-                                <label for="default-radio" className="ml-2 text-sm font-medium text-gray-600 ">All</label>
+                                <input id="all" name="all" type="radio" value="All" checked={"All" == category} onChange={onCategoryChange} className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                                <label for="all" className="ml-2 text-sm font-medium text-gray-600 ">All</label>
                             </div>
 
                             <div className="flex items-center">
-                                <input id="default-radio" name="category" type="radio" value="Alat-Make-Up" checked={"Alat-Make-Up" == category} onChange={onCategoryChange} className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-                                <label for="default-radio" className="ml-2 text-sm font-medium text-gray-600 ">Alat Make Up</label>
+                                <input id="make-up" name="make-up" type="radio" value="Alat Make Up" checked={"Alat Make Up" == category} onChange={onCategoryChange} className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                                <label for="make-up" className="ml-2 text-sm font-medium text-gray-600 ">Alat Make Up</label>
                             </div>
                             <div className="flex items-center">
-                                <input id="default-radio" name="category" type="radio" value="Figura" checked={"Figura" == category} onChange={onCategoryChange} className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-                                <label for="default-radio" className="ml-2 text-sm font-medium text-gray-600 ">Figura</label>
+                                <input id="figura" name="figura" type="radio" value="Figura" checked={"Figura" == category} onChange={onCategoryChange} className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                                <label for="figura" className="ml-2 text-sm font-medium text-gray-600 ">Figura</label>
                             </div>
                             <div className="flex items-center">
-                                <input id="default-radio" name="category" type="radio" value="Box%Kado" checked={"Box%Kado" == category} onChange={onCategoryChange} className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-                                <label for="default-radio" className="ml-2 text-sm font-medium text-gray-600 ">Box Kado</label>
+                                <input id="box-kado" name="box-kado" type="radio" value="Box Kado" checked={"Box Kado" == category} onChange={onCategoryChange} className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                                <label for="box-kado" className="ml-2 text-sm font-medium text-gray-600 ">Box Kado</label>
                             </div>
                             <div className="flex items-center">
-                                <input id="default-radio" name="category" type="radio" value="Alat%Tulis" checked={"Alat%Tulis" == category} onChange={onCategoryChange} className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-                                <label for="default-radio" className="ml-2 text-sm font-medium text-gray-600 ">Alat Tulis</label>
+                                <input id="alat-tulis" name="alat-tulis" type="radio" value="Alat Tulis" checked={"Alat Tulis" == category} onChange={onCategoryChange} className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                                <label for="alat-tulis" className="ml-2 text-sm font-medium text-gray-600 ">Alat Tulis</label>
                             </div>
                             <div className="flex items-center">
-                                <input id="default-radio" name="category" type="radio" value="pernak-pernik" checked={"pernak-pernik" == category} onChange={onCategoryChange} className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-                                <label for="default-radio" className="ml-2 text-sm font-medium text-gray-600 ">Pernak-pernik</label>
+                                <input id="pernak-pernik" name="pernak-pernik" type="radio" value="Pernak-pernik" checked={"Pernak-pernik" == category} onChange={onCategoryChange} className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                                <label for="pernak-pernik" className="ml-2 text-sm font-medium text-gray-600 ">Pernak-pernik</label>
                             </div>
                             <div className="flex items-center">
-                                <input id="default-radio" name="category" type="radio" value="Kertas%Daur%Ulang" checked={"Kertas%Daur%Ulang" == category} onChange={onCategoryChange} className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-                                <label for="default-radio" className="ml-2 text-sm font-medium text-gray-600 ">Kertas Daur Ulang</label>
+                                <input id="daur-ulang" name="daur-ulang" type="radio" value="Kertas Daur Ulang" checked={"Kertas Daur Ulang" == category} onChange={onCategoryChange} className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                                <label for="daur-ulang" className="ml-2 text-sm font-medium text-gray-600 ">Kertas Daur Ulang</label>
                             </div>
                         </div>
                     </div>
 
 
-                    <Link href={`http://localhost:5000/product&category=${category}`} className=" border-yellow-600 border-2 text-center rounded-full col-span-2 p-3 text-neutral-900  transition-colors">
-                        FILTER
-                    </Link>
+                        <button className=" border-yellow-600 border-2 text-center rounded-full col-span-2 p-3 text-neutral-900  transition-colors" onClick={getData}>
+                            FILTER
+                        </button>
+                    
                 </div>
 
                 {products && <div className='w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5'>
